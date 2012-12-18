@@ -2,20 +2,20 @@ import haxe.macro.Expr;
 
 class ArrayExtensions {
 
-//   static public function map<T,R>(arg:Array<T>, f:T -> R):Array<R> {
-//     var r = [];
-//     for (x in arg)
-//       r.push(f(x));
-//     return r;
-//   }
+   static public function mapA<T,R>(arg:Array<T>, f:T -> R):Array<R> {
+     var r = [];
+     for (x in arg)
+       r.push(f(x));
+     return r;
+   }
 
-//   static public function filter<T>(arg:Array<T>, f:T -> Bool):Array<T> {
-//     var r = [];
-//     for (x in arg)
-//       if (f(x))
-//       r.push(x);
-//     return r;
-//   }
+   static public function filterA<T>(arg:Array<T>, f:T -> Bool):Array<T> {
+     var r = [];
+     for (x in arg)
+       if (f(x))
+       r.push(x);
+     return r;
+   }
 
   static public function both_left_right<T>(a:Array<T>, b:Array<T>) {
     var b_ = b.copy();
