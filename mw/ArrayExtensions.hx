@@ -1,3 +1,4 @@
+package mw;
 import haxe.macro.Expr;
 
 class ArrayExtensions {
@@ -34,10 +35,26 @@ class ArrayExtensions {
     return null;
   }
 
+  static public function contains<T>(a:Array<T>, e:T) {
+    for(x in a)
+      if (x == e)
+        return true;
+    return false;
+  }
+
   static public function concatenateArrays<T>(a:Array<Array<T>>): Array<T> {
     var r = [];
     for (x in a) r.concat(x);
     return r;
+  }
+
+  static public function append<T>(a:Array<T>, b:Array<T>) {
+    for(x in b) a.push(x);
+  }
+
+  static public inline function last<T>(a:Array<T>):Null<T> {
+    // TODO: what happens on empty array?
+    return a[a.length -1];
   }
 
 }

@@ -1,4 +1,4 @@
-package macro;
+package mw.macro;
 import haxe.macro.Expr;
 import haxe.macro.Context;
 

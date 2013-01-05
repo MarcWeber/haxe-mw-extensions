@@ -1,3 +1,4 @@
+package mw;
 using Lambda;
 using HashExtensions;
 

@@ -1,3 +1,4 @@
+package mw;
 class HashExtensions {
   static public function eachKeyValue<T>(x:Hash<T>, f) {
     for( k in x.keys() )

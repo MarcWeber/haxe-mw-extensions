@@ -1,3 +1,4 @@
+package mw;
 class DeepCopy {
 
   // http://haxe.org/forum/thread/3395#nabble-td2119917
