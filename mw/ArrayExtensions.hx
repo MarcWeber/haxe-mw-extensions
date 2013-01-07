@@ -57,4 +57,35 @@ class ArrayExtensions {
     return a[a.length -1];
   }
 
+  static public function intersperse<T>(a:Array<T>, sep:T):Array<T> {
+    var r = [];
+
+    for(x in a){
+      r.push(x);
+      r.push(sep);
+    }
+    r.pop();
+    return r;
+  }
+
+  static public function fold2<A>( it : Array<A>, f : A -> A -> A) : A {
+    var r = it[0];
+    if (it.length == 0) throw "at least one element expected";
+    for (i in (1... it.length))
+      r = f(r, it[i]);
+    return  r;
+  }
+
+  static public function difference<T>(a:Array<T>, b:Array<T>, ?eq: T -> T -> Bool) {
+    var r = [];
+    for(x in a)
+      if (!ArrayExtensions.contains(b, x))
+        r.push(x);
+    return r;
+  }
+
+  static public inline function empty<T>(a:Array<T>) {
+    return a.length == 0;
+  }
+
 }

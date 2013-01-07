@@ -1,6 +1,6 @@
 package mw;
 using Lambda;
-using HashExtensions;
+using mw.HashExtensions;
 
 class IteratorExtensions {
   static public function dups(a:Iterable<String>):Array<String> {

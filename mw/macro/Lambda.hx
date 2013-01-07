@@ -20,6 +20,7 @@ class Lambda {
         case "_": param;
         case "1": macro function(_){ return $param; };
         case "2": macro function(_1, _2){ return $param; };
+        case _: throw "unexpected";
       }
     };
     var params_ = [];
