@@ -14,6 +14,7 @@ class ExprExtensions {
 
   // useful for debugging an expression
   @:macro static public function trace(e:haxe.macro.Expr):haxe.macro.Expr {
+    trace(e);
     return e;
   }
 

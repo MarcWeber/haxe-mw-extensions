@@ -10,6 +10,14 @@ class ArrayExtensions {
      return r;
    }
 
+   static public function mapAI<T,R>(arg:Array<T>, f: Int -> T -> R):Array<R> {
+     var i = 0;
+     var r = [];
+     for (x in arg)
+       r.push(f(i++, x));
+     return r;
+   }
+
    static public function filterA<T>(arg:Array<T>, f:T -> Bool):Array<T> {
      var r = [];
      for (x in arg)
@@ -86,6 +94,22 @@ class ArrayExtensions {
 
   static public inline function empty<T>(a:Array<T>) {
     return a.length == 0;
+  }
+
+  static public function join<T>(a:Array<Array<T>>):Array<T> {
+    var r = [];
+    for(x in a) ArrayExtensions.append(r, x);
+    return r;
+  }
+
+  @:macro static public function first_or_null<T>(in_:ExprOf<Array<T>>, cond:Expr):ExprOf<Null<T>> {
+    return macro {
+      for(_ in $in_){
+        if ($cond)
+          return _;
+      }
+      return null;
+    }
   }
 
 }
