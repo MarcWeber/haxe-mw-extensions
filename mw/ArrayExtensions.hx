@@ -102,14 +102,18 @@ class ArrayExtensions {
     return r;
   }
 
-  @:macro static public function first_or_null<T>(in_:ExprOf<Array<T>>, cond:Expr):ExprOf<Null<T>> {
+  macro static public function first_or_null<T>(in_:ExprOf<Array<T>>, cond:Expr):ExprOf<Null<T>> {
     return macro {
+      var r = null;
       for(_ in $in_){
         if ($cond)
-          return _;
+          r = _;
       }
-      return null;
+      r;
     }
   }
 
+  static inline public function join_start_end<T>(a:Array<T>, sep:String):String {
+    return sep+a.join(sep)+sep;
+  }
 }

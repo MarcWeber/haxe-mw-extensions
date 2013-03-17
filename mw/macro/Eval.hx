@@ -8,7 +8,7 @@ class Eval {
     var i:Int = Eval.eval();
   */
   public static var expr:Expr = null; /* its a luck that expr is shared while calling @:macro functions */
-  @:macro static public function eval() {
+  macro static public function eval() {
     return expr;
   }
 

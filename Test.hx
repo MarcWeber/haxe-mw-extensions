@@ -1,6 +1,7 @@
 using mw.ArrayExtensions;
 using haxe.macro.Expr;
-using mw.macro.Lambda;
+using mw.L;
+using mw.macro.StructureHelpers;
 
 enum StringOrExpr {
   string(s:String);
@@ -36,10 +37,26 @@ class Test {
 
     trace("done");
     trace(l == l);
-    trace(Lambda.eval()());
+    trace(L.eval()());
+  }
+
+
+  static public function assert_equal(a:String, b:String) {
+    if (a != b)
+      throw 'should have been equal: $a = $b';
+  }
+
+  static public function test_structure_helper() {
+     var a = { a: "aa", b: "ab", c: "ac"};
+     var b = { a: "ba", b: "bb", c: "cc"};
+     var c = { a: "ca", b: "cb", c: "cc"};
+     var z = a.sh_merge("-c,b", b, "-a,c", c, "c");
+     assert_equal(z+"", {a: a.a, b:b.b, c:c.c}+"");
+     trace("test_structure_helper ok");
   }
 
   static function main() {
     test_l();
+    test_structure_helper();
   }
 }

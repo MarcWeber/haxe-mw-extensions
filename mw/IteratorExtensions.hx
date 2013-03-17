@@ -5,8 +5,8 @@ using mw.HashExtensions;
 class IteratorExtensions {
   static public function dups(a:Iterable<String>):Array<String> {
     var r = [];
-    var seen = new Hash<String>();
-    var dups = new Hash<String>();
+    var seen = new Map<String, String>();
+    var dups = new Map<String, String>();
     for( x in a ){
       if (seen.exists(x))
         dups.set(x, null);

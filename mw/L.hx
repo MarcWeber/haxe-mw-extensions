@@ -1,8 +1,8 @@
-package mw.macro;
+package mw;
 import haxe.macro.Expr;
 import haxe.macro.Context;
 
-class Lambda {
+class L {
 
 #if macro
   public static function helper<T,T2>(a:Expr, field:Expr, params:Array<Expr>, to_lambda:String):ExprOf<Array<T2>> {
@@ -32,25 +32,25 @@ class Lambda {
 #end
 
   // one arguments, second lambda
-  @:macro public static function l1<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
-    return Lambda.helper(a, b, [f], "1");
+  macro public static function l1<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
+    return helper(a, b, [f], "1");
   }
 
 
-  @:macro public static function l2<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
-    return Lambda.helper(a, b, [f], "2");
+  macro public static function l2<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
+    return helper(a, b, [f], "2");
   }
 
   // skip first argument represented by _, replace second by lambda expression
-  @:macro public static function l_1<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
-    return Lambda.helper(a, b, [f], "_1");
+  macro public static function l_1<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
+    return helper(a, b, [f], "_1");
   }
 
-  @:macro public static function l_2<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
-    return Lambda.helper(a, b, [f], "_2");
+  macro public static function l_2<T,T2>(a:Expr, b:Expr, f:Expr):ExprOf<Array<T2>> {
+    return helper(a, b, [f], "_2");
   }
 
-  @:macro public static function eval():Expr {
+  macro public static function eval():Expr {
     return Context.parse('function(){ return "abc"; }', Context.currentPos());
   }
 
