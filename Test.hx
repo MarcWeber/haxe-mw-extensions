@@ -31,9 +31,9 @@ class Test {
       function(msg, a, b){ if (a != b) trace(msg + " failed expected: "+a+" got : "+b); }
 
     var l:Array<Int> = [2, 3];
-    expect("array map", [2, 3],  [1, 2].l1(mapA,  _+1) );
-    expect("array filter", [2], [1, 2].l1(filterA, _ > 1) );
-    expect("array map", [2, 3],  [1, 2].l1(mapA, _+1) );
+    expect("array map", [2, 3],  [1, 2].l1(map_A,  _+1) );
+    expect("array filter", [2], [1, 2].l1(filter_A, _ > 1) );
+    expect("array map", [2, 3],  [1, 2].l1(map_A, _+1) );
 
     trace("done");
     trace(l == l);
@@ -54,9 +54,29 @@ class Test {
      assert_equal(z+"", {a: a.a, b:b.b, c:c.c}+"");
      trace("test_structure_helper ok");
   }
+  
+  static public function test_diff() {
+    var a = [1,2];
+    var b = [1,3];
+
+    var diff = mw.util.diff.DiffExtensions.diffArrays(a, b,
+      function(a,b) return a == b,
+      function(a,b){ return a +b; }
+    );
+    if (
+          diff.left.length != 1
+       || diff.right.length != 1
+       || diff.both.length != 1
+       || diff.left[0] != 2
+       || diff.right[0] != 3
+       || diff.both[0] != 2
+       )
+      throw "failure";
+  }
 
   static function main() {
     test_l();
     test_structure_helper();
+    test_diff();
   }
 }

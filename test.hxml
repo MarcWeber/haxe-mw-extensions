@@ -1,2 +1,3 @@
+-cp ../monax/src
 -neko Test.n
 -main Test

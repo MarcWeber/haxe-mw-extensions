@@ -1,4 +1,4 @@
-packag8e mw.php;
+package mw.php;
 
 typedef CatchAllError = {
   msg:Dynamic
@@ -18,6 +18,19 @@ class CatchAll {
       return;
     throw (error_type+' '+error_msg);
   }
+
+
+  static public function catchAllErrorToString(c:CatchAllError):String {
+#if php
+	var lines = [];
+	lines.push(c.msg);
+	for (l in c.trace)
+	  lines.push('${l.file}:${l.line}');
+	return lines.join("\n");
+#else
+#end
+  }
+
 
   static public var php_handle_error: CatchAllError -> Void;
 
@@ -44,8 +57,9 @@ class CatchAll {
 
       // using native try catch to get the stack trace which is important
       untyped __php__("try {");
-    
+
       CatchAll.php_handle_error = handle_error;
+
       /* what is the problem with PHP?
         there are many warnings which you may want to care about.
         However on most server systems they are hidden (for good reason)
@@ -59,7 +73,10 @@ class CatchAll {
         If you have low traffic sites you can send errors by mail.
         For high traffic sites you should try to do something else
       */
+#if PHP_SET_ERROR_HANDLER
       untyped __call__("set_error_handler", CatchAll.php_error_handler);
+#end
+
       untyped __call__("register_shutdown_function", CatchAll.shutdown_function);
 
       action();
@@ -73,10 +90,18 @@ class CatchAll {
         var b = false; if (b) php.Lib.objectOfAssociativeArray(null);
         handle_error({
           msg: e.getMessage(),
-          trace: untyped php.Lib.toHaxeArray(
-                __php__("array_map('php_Lib::objectOfAssociativeArray', $exception->getTrace())")
-              )
-          });
+          trace:
+          [{
+            file: e.getFile(),
+            line: e.getLine(),
+            args: null
+          }].concat(
+          untyped php.Lib.toHaxeArray(
+                untyped __call__("array_merge",
+                  untyped __call__("array_map", 'php_Lib::objectOfAssociativeArray', e.getTrace())
+                )
+            )
+          )});
       }
 
     #else
@@ -86,6 +111,7 @@ class CatchAll {
       }catch(e:Dynamic){ 
         handle_error(e);
       }
+
     #end
   }
 
